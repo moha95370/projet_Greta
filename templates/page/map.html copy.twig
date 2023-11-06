@@ -1,0 +1,106 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{asset('clean/assets/img/carte-bg.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Trouver une borne</h1>
+                            <span class="subheading"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+
+
+        <div id="map"></div> 
+
+        <!-- Fichiers Javascript -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        
+        {# On initialise la carte #}
+        <script>
+            var carte = L.map('map').setView([48.836674011447,2.2523205195811], 13);
+
+            // on charge les "tuiles"
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(carte);
+
+            var marqueurs = L.markerClusterGroup();
+
+            {% for station in stations %}
+                var marqueur = L.marker([{{station.geometry.coordinates[1]}}, {{station.geometry.coordinates[0]}}]);
+                marqueur.bindPopup("{{ station.geometry.coordinates[1] }},{{station.geometry.coordinates[0]}}")
+                marqueur.openPopup();
+                marqueurs.addLayer(marqueur);
+            {% endfor %}
+            carte.addLayer(marqueurs);
+
+            // on crée le marqueur et on lui attribue une popup
+            // var marqueur = L.marker([48.852969, 2.349903]).addTo(carte);
+            // marqueur.bindPopup('Paris<br> La plus belle ville')
+            // marqueur.openPopup();
+
+            var sample_json = {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                2.2421097543277373,
+                                48.82805373146181
+                            ]
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                2.2414687339339903,
+                                48.83305805216887
+                            ]
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                2.349903,
+                                48.852969
+                                
+                            ]
+                        }
+                    }
+                ]
+            }
+
+            L.geoJSON(sample_json).addTo(carte);
+
+        </script>
+
+
+{% endblock %}

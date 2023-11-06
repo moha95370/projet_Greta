@@ -1,0 +1,143 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Carte pour trouver une borne!{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{asset('clean/assets/img/carte-bg.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Trouver une borne</h1>
+                            <span class="subheading"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+
+
+        <div id="map"></div> 
+
+        <!-- Fichiers Javascript -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        <script src="jquery-2.1.1.min.js"></script>
+        
+        {# On initialise la carte #}
+        <script>
+            var map = L.map('map').setView([48.852969, 2.349903], 13);
+
+            // on charge les "tuiles"
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+    
+            // var mapData = {{ mapData|raw|json_encode|raw }}; // Convertissez les données GeoJSON en chaîne JSON.
+
+            // mapData = JSON.parse(mapData); // Convertissez la chaîne JSON en objet JavaScript.
+
+
+            // mapData.features.forEach(function(feature) {
+            // var lat = feature.geometry.coordinates[1];
+            // var lng = feature.geometry.coordinates[0];
+            // var title = feature.properties.nom_officiel_du_musee; // Utilisez le nom du musée comme titre.
+            //});
+            var marker = L.marker([48.852969, 2.349903]).addTo(map);
+            marker.bindPopup('borne<br> borne');
+        
+            
+            
+            // //data.map(function (result){   
+            //     var marqueur = L.marker([48.852969, 2.349903]).addTo(carte);
+            //     marqueur.bindPopup('borne<br> borne')
+
+            async function fetchData() {
+                let requestApi = `https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/bornes-irve/records?refine=departement%3A%22Paris%22`;
+                let dataApi = await fetch(requestApi);
+                console.log(dataApi);
+
+                let response = await dataApi.json();
+                console.log(response);
+            }
+
+            async function initMap() {
+                var map = L.map('map').setView([48.852969, 2.349903], 13);
+
+                // on charge les "tuiles"
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                const data = await fetchData();
+                data.results.forEach(function (station) {
+                    var lat = station.geo_point_borne.lat;
+                    var lon = station.geo_point_borne.lon;
+
+                    var marker = L.marker([lat, lon]).addTo(map);
+                    marker.bindPopup(station.n_station);
+                });
+            }
+
+            initMap();
+            // //})
+
+
+
+            var chargingStations = {{ stations|json_encode|raw }};
+
+            chargingStations.results.forEach(function(station) {
+                var lat = station.ylatitude; // Chemin pour la latitude
+                var lon = station.xlongitude; // Chemin pour la longitude
+
+                L.marker([lat, lon])
+                .bindPopup(station.n_station)
+                .addTo(map);
+            });
+
+
+            // {% for station in stations %}
+            //     var marqueur = L.marker([{{station.latitude}}, {{station.longitude}}]).addTo(map);
+            //     marqueur.bindPopup("{{ station.latitude }},{{station.longitude}}")
+            //     marqueur.openPopup();
+            // {% endfor %}
+
+
+--------------------------------------------------------
+            var chargingStationsAPI = {{ stationsFromAPI|json_encode|raw }};
+            var chargingStationsDB = {{ stationsFromDB|json_encode|raw }};
+
+            chargingStationsAPI.results.forEach(function(station) {
+                var lat = station.ylatitude; // Chemin pour la latitude
+                var lon = station.xlongitude; // Chemin pour la longitude
+
+                L.marker([lat, lon])
+                .bindPopup(station.n_station)
+                .addTo(map);
+            });
+
+            chargingStationsDB.forEach(function(station) {
+                var lat = station.latitude; // Chemin pour la latitude
+                var lon = station.longitude; // Chemin pour la longitude
+
+                L.marker([lat, lon])
+                .bindPopup(station.name)
+                .addTo(map);
+            });
+
+
+        </script>
+
+
+{% endblock %}

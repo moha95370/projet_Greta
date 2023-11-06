@@ -1,0 +1,74 @@
+{% extends 'sbadmin.html.twig' %}
+
+{% block title %}Gestion des informations!{% endblock %}
+
+{% block final_stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="{{ asset('sbadmin/css/mystyles.css')}}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Gestion des informations</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Informations</li>
+            <li class="breadcrumb-item active">Liste :</li>
+        </ol>
+
+        <a href="{{ path('admin_information_add')}}" class="btn btn-primary mb-4">Ajouter</a>
+        
+        <!-- Tableau  -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                DataTable
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>titre</th>
+                            <th>Date</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--une ligne du tableau-->
+                        {% for information in informations %}
+                        <tr>
+                        <td>{{ information.id }}</td>
+                        <td><img src="{{ information.image }}" alt="" class="img"></td>
+                        <td>{{ information.title }}</td>
+                        <td>{{ information.createdAt | date }}</td>
+                        <td>{{ ( information.active == true ) ? 'En ligne' : 'Hors ligne' }}</td>
+                        <td>
+                            <a href="{{ path('admin_information_update', {id: information.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('admin_information_delete', {id: information.id, _csrf_token: csrf_token('delete')}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous certain ?')">Supprimer</a>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>titre</th>
+                            <th>Date</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block final_javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('sbadmin/js/datatables-simple-demo.js')}}"></script>
+{% endblock %}

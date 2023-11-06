@@ -1,0 +1,86 @@
+{% extends 'sbadmin.html.twig' %}
+
+{% block title %}Gestion des bornes!{% endblock %}
+
+{% block final_stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="{{ asset('sbadmin/css/mystyles.css')}}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Gestion des bornes</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Bornes</li>
+            <li class="breadcrumb-item active">Liste :</li>
+        </ol>
+
+        <a class="btn btn-primary mb-4" href="{{ path('admin_station_add')}}">Ajouter</a>
+        
+        <!-- Tableau  -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                DataTable
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Lieu</th>
+                            <th>Adresse</th>
+                            <th>latitude</th>
+                            <th>longitude</th>
+                            <th>Date de création</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--une ligne du tableau-->
+                        {% for station in stations %}
+                        <tr>
+                        <td>{{ station.id }}</td>
+                        <td>{{ station.name }}</td>
+                        <td>{{ station.type.name }}</td>
+                        <td>{{ station.place.name }}</td>
+                        <td>{{ station.address }}</td>
+                        <td>{{ station.latitude }}</td>
+                        <td>{{ station.longitude }}</td>
+                        <td>{{ station.createdAt | date }}</td>
+                        <td>{{ ( station.active == true ) ? 'En ligne' : 'Hors ligne' }}</td>
+                        <td>
+                            <a href="{{ path('admin_station_update', {id: station.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('admin_station_delete', {id: station.id, _csrf_token: csrf_token('delete')}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous certain ?')">Supprimer</a>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Lieu</th>
+                            <th>Adresse</th>
+                            <th>latitude</th>
+                            <th>longitude</th>
+                            <th>Date de création</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block final_javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('sbadmin/js/datatables-simple-demo.js')}}"></script>
+{% endblock %}

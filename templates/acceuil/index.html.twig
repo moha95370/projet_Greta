@@ -1,0 +1,45 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Page d'acceuil!{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{asset('clean/assets/img/home3.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Bienvenue</h1>
+                            <span class="subheading">Trouver des bornes de recharge pour véhicule électrique</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+                    <!-- Post preview-->
+                    
+                    {% for information in informations %}
+
+                        <div class="information-preview">
+                            <a href="{{ path('home', {slug: information.slug}) }}">
+                                <p class="information-subtitle">{{ information.content | raw}}</p>
+                                <img src="{{ information.image }}" alt="" style="width: 100%">
+                            </a>
+                        </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                                
+                    {% endfor %}
+                    
+                </div>
+
+                
+            </div>
+        </div>
+{% endblock %}
