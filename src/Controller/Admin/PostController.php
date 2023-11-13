@@ -36,7 +36,8 @@ class PostController extends AbstractController
         $form = $this->createForm(Post2Type::class, $post);
         
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {//tester si la requette du formulaire est post
+        //tester si la requette du formulaire est post
+        if ($form->isSubmitted() && $form->isValid()) {
             $post->setUser($this->getUser());
             $em = $doctrine->getManager();
             $em->persist($post);

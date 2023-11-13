@@ -36,7 +36,7 @@
                                     Ecrit par {{ comment.user.displayName }} 
                                     {{ comment.updatedAt | ago }}<br>
                                     {% if comment.user == app.user %}
-                                        <a href="">Modifier</a> - <a href="{{ path('comment_delete', {id: comment.id}) }}">Supprimer</a>
+                                        <a href=""><i class="fa-solid fa-user-pen"></i></a> - <a href="{{ path('comment_delete', {id: comment.id, _csrf_token: csrf_token('delete')}) }}" onclick="return confirm('Etes-vous certain ?')"><i class="fa-solid fa-trash-can"></i></a>
                                     {% endif %}
                                 </li>
                                 {% endfor %}

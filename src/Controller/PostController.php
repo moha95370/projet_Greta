@@ -48,13 +48,18 @@ class PostController extends AbstractController
     #[Route('/post/add', name: 'post_add')]
     public function addPost(Request $request, ManagerRegistry $doctrine): Response
     {
+        //création une instance vide de ayant le format post
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         
         $form->handleRequest($request);
+        //tester si la requette du formulaire est post
         if ($form->isSubmitted() && $form->isValid()) {
+            //Associer le user connecté
             $post->setUser($this->getUser());
+            //Mettre Active à false par defaut
             $post->setActive(false);
+            //Persister le post
             $em = $doctrine->getManager();
             $em->persist($post);
             $em->flush();
@@ -62,6 +67,7 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/add.html.twig', [
+            // Passer le formulaire à la vue
             'form' => $form->createView(),
         ]);
     }

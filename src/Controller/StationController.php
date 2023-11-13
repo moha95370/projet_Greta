@@ -25,13 +25,18 @@ class StationController extends AbstractController
     #[Route('/station/add', name: 'station_add')]
     public function addStation(Request $request, ManagerRegistry $doctrine): Response
     {
+        //création une instance vide de ayant le format Station
         $station = new Station();
         $form = $this->createForm(StationType::class, $station);
         
         $form->handleRequest($request);
+        //tester si la requette du formulaire est station
         if ($form->isSubmitted() && $form->isValid()) {
+            //Associer le user connecté
             $station->setUser($this->getUser());
+            //Mettre Active à false par defaut
             $station->setActive(false);
+            //Persister la station
             $em = $doctrine->getManager();
             $em->persist($station);
             $em->flush();
@@ -39,9 +44,10 @@ class StationController extends AbstractController
         }
 
         return $this->render('station/add.html.twig', [
+            // Passer le formulaire à la vue
             'form' => $form->createView(),
         ]);
     }
-
+    
 
 }
