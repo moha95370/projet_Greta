@@ -39,7 +39,7 @@
     
 
             var chargingStations = {{ stations|json_encode|raw }};
-
+            //l'extension MarkerCluster qui permet de regrouper les marqueurs proches les uns des autres pour améliorer la lisibilité de la carte.
             var markers = new L.MarkerClusterGroup();
 
             chargingStations.results.forEach(function(station) {
