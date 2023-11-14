@@ -21,7 +21,8 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    //une requête SQL spécifique afin d'alimenter une sidebar dans la page blog avec les articles les plus anciens
+    //une requête SQL spécifique afin d'alimenter une sidebar 
+    //dans la page blog avec les articles les plus anciens
     public function findOldPosts(int $nb = 5): array
     {
         $entityManager = $this->getEntityManager();
