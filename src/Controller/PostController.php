@@ -40,7 +40,7 @@ class PostController extends AbstractController
     public function post_category(Category $category): Response
     {
         return $this->render('post/category.html.twig', [
-            'posts' => $category->getPosts(),
+            'category' => $category,
         ]);
     }
 

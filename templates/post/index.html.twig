@@ -68,7 +68,7 @@
                     
                     {% for category in categories %}
                         <div class="post-preview">
-                            <a href="">
+                            <a href="{{ path('post_category', {slug: category.slug}) }}">
                                 <p class="post-subtitle">{{ category.name }}</p>
                             </a>
                         </div>
