@@ -11,6 +11,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+
 
 
 class PostType extends AbstractType
@@ -25,6 +27,16 @@ class PostType extends AbstractType
             //->add('content', TextareaType::class)
             ->add('content', CKEditorType::class, [
                 "label" => "Contenu",
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                //'download_label' => '...',
+                'download_uri' => true,
+                'image_uri' => true,
+                //'imagine_pattern' => '...',
+                'asset_helper' => true,
             ])
             ->add('image', TextType::class)
             //->add('createdAt')

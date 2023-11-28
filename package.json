@@ -4,7 +4,6 @@
     "leaflet.markercluster": "^1.5.3"
   },
   "devDependencies": {
-    "@hotwired/stimulus": "^3.0.1",
-    "@nucleos/maps-bundle": "file:vendor/nucleos/maps-bundle/assets"
+    "@hotwired/stimulus": "^3.0.1"
   }
 }

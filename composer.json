@@ -13,7 +13,6 @@
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "geocoder-php/nominatim-provider": "^5.7",
         "knplabs/knp-time-bundle": "^2.1",
-        "leaflet/leaflet": "*",
         "nucleos/maps-bundle": "*",
         "nyholm/psr7": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -42,7 +41,6 @@
         "symfony/string": "6.3.*",
         "symfony/translation": "6.3.*",
         "symfony/twig-bundle": "6.3.*",
-        "symfony/twig-pack": "*",
         "symfony/validator": "6.3.*",
         "symfony/web-link": "6.3.*",
         "symfony/yaml": "6.3.*",
@@ -50,7 +48,8 @@
         "symfonycasts/verify-email-bundle": "^1.13",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/string-extra": "^3.7",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^2.2"
     },
     "config": {
         "allow-plugins": {
