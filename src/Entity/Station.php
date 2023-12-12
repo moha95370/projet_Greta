@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -48,6 +50,15 @@ class Station
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $longitude = null;
+
+    #[ORM\ManyToMany(targetEntity: Charge::class, mappedBy: 'station')]
+    private Collection $charge_station;
+
+    public function __construct()
+    {
+        $this->charge_station = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -173,5 +184,34 @@ class Station
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Charge>
+     */
+    public function getChargeStation(): Collection
+    {
+        return $this->charge_station;
+    }
+
+    public function addChargeStation(Charge $chargeStation): static
+    {
+        if (!$this->charge_station->contains($chargeStation)) {
+            $this->charge_station->add($chargeStation);
+            $chargeStation->addStation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChargeStation(Charge $chargeStation): static
+    {
+        if ($this->charge_station->removeElement($chargeStation)) {
+            $chargeStation->removeStation($this);
+        }
+
+        return $this;
+    }
+
+
 
 }
