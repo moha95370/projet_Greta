@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.16",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "geocoder-php/nominatim-provider": "^5.7",
+        "knplabs/knp-paginator-bundle": "^6.3",
         "knplabs/knp-time-bundle": "^2.1",
         "nucleos/maps-bundle": "*",
         "nyholm/psr7": "^1.8",
