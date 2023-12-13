@@ -46,8 +46,21 @@
                 var lat = station.ylatitude; // Chemin pour la latitude
                 var lon = station.xlongitude; // Chemin pour la longitude
 
+                const html= 'Adresse : ' + station.ad_station + '<br>' 
+                        + 'Puissance : ' + station.puiss_max + '<br>'
+                        + 'Type prise : ' + station.type_prise + '<br>'
+                        + 'Operateur : ' + station.n_operateur + '<br>'
+                        + 'Acces recharge : ' + station.acces_recharge
+
+                const customOptions = {
+                'maxWidth': '700',
+                // 'className': 'custom',
+                closeButton: true,
+                autoClose: false
+                }
+
                 markers.addLayer(L.marker([lat, lon])
-                .bindPopup(station.n_station)
+                .bindPopup(html,customOptions)
                 .addTo(map));
             });
             map.addLayer(markers);
