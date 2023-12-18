@@ -1,0 +1,56 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Profil de {{app.user.displayName}}!{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{asset('clean/assets/img/install-bg.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Mes Voitures</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<!-- Main Content-->
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Gestion des voitures</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Voitures</li>
+            <li class="breadcrumb-item active">Liste :</li>
+        </ol>
+
+        <a class="btn btn-primary mb-4" href="{{ path('vehicle_add')}}">Ajouter</a>
+                   
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Type de prise</th>
+                        <th>Date de création</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--une ligne du tableau-->
+                    {% for vehicle in vehicles %}
+                    <tr>
+                    <td>{{ vehicle.id }}</td>
+                    <td>{{ vehicle.typePrise }}</td>
+                    <td>{{ vehicle.createdAt | date }}</td>                    
+                    <td>
+                        <a href="" class="btn btn-primary btn-sm">Modifier</a>
+                        <a href="" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous certain ?')">Supprimer</a>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+         
+        </div>
+{% endblock %}

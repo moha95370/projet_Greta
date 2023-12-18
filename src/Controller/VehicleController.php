@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Station;
-use App\Form\StationType;
-use App\Repository\StationRepository;
+use App\Entity\Vehicle;
+use App\Form\VehicleType;
+use App\Repository\VehicleRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,46 +12,44 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class StationController extends AbstractController
+class VehicleController extends AbstractController
 {
-    #[Route('/station', name: 'app_station')]
-    public function index(StationRepository $stationRepository): Response
+    #[Route('/vehicle', name: 'app_vehicle')]
+    public function index(VehicleRepository $vehicleRepository): Response
     {
         // $stations = $stationRepository->find($this->getUser());
-        $stations = $stationRepository->findAll();
+        $vehicles = $vehicleRepository->findAll();
 
-        return $this->render('station/index.html.twig', [
-            'stations' => $stations,
+        return $this->render('vehicle/index.html.twig', [
+            'vehicles' => $vehicles,
         ]);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/station/add', name: 'station_add')]
-    public function addStation(Request $request, ManagerRegistry $doctrine): Response
+    #[Route('/vehicle/add', name: 'vehicle_add')]
+    public function addVehicle(Request $request, ManagerRegistry $doctrine): Response
     {
         //création une instance vide de ayant le format Station
-        $station = new Station();
-        $form = $this->createForm(StationType::class, $station);
+        $vehicle = new Vehicle();
+        $form = $this->createForm(VehicleType::class, $vehicle);
         
         $form->handleRequest($request);
         //tester si la requette du formulaire est station
         if ($form->isSubmitted() && $form->isValid()) {
             //Associer le user connecté
-            $station->setUser($this->getUser());
+            $vehicle->setUser($this->getUser());
             //Mettre Active à false par defaut
-            $station->setActive(false);
+            $vehicle->setActive(false);
             //Persister la station
             $em = $doctrine->getManager();
-            $em->persist($station);
+            $em->persist($vehicle);
             $em->flush();
-            return $this->redirectToRoute('app_station');
+            return $this->redirectToRoute('app_vehicle');
         }
 
-        return $this->render('station/add.html.twig', [
+        return $this->render('vehicle/add.html.twig', [
             // Passer le formulaire à la vue
             'form' => $form->createView(),
         ]);
     }
-    
-
 }

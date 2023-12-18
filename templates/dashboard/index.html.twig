@@ -1,0 +1,45 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Profil de {{app.user.displayName}}!{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{asset('clean/assets/img/install-bg.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Mon compte</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+                    <div class="card">
+						<div class="card-header">
+							<h2>Compte de {{app.user.displayName}}</h2>
+						</div>
+						<div class="card-body">
+						    <div>
+								<h5 class="card-title">Nom d'utilisateur : </h5>
+								<p class="card-text">{{app.user.displayName}}</p>
+								<h5 class="card-title">Email</h5>
+								<p class="card-text">{{app.user.email}}</p>
+							</div>
+							<div>
+                                <a href="{{ path('app_station') }}" class="btn btn-primary">Gestion des bornes</a>
+                                <a href="{{ path('app_vehicle') }}" class="btn btn-primary">Gestion des voitures</a>
+						    </div>
+                        </div>
+					</div>
+
+                </div>
+            </div>
+        </div>
+{% endblock %}
