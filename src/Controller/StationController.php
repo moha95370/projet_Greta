@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Station;
 use App\Form\StationType;
 use App\Repository\StationRepository;
@@ -17,8 +18,9 @@ class StationController extends AbstractController
     #[Route('/station', name: 'app_station')]
     public function index(StationRepository $stationRepository): Response
     {
-        // $stations = $stationRepository->find($this->getUser());
-        $stations = $stationRepository->findAll();
+    
+        $user = $this->getUser();
+        $stations = $stationRepository->findBy(['user' => $user]);
 
         return $this->render('station/index.html.twig', [
             'stations' => $stations,
