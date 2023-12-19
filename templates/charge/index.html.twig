@@ -1,0 +1,61 @@
+{% extends 'clean.html.twig' %}
+
+{% block title %}Profil de {{app.user.displayName}}!{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{asset('clean/assets/img/install-bg.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Mes Charges</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<!-- Main Content-->
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Gestion des charges</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Bornes</li>
+            <li class="breadcrumb-item active">Liste :</li>
+        </ol>
+
+        <a class="btn btn-primary mb-4" href="{{ path('charge_add')}}">Ajouter</a>
+                   
+         <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Date du début</th>
+                        <th>Date de fin</th>
+                        <th>Prix</th>
+                        <th>Payement</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--une ligne du tableau-->
+                    {% for charge in charges %}
+                    <tr>
+                    <td>{{ charge.id }}</td>
+                    <td>{{ charge.createdAt | date }}</td>
+                    <td>{{ charge.duration | date }}</td>
+                    <td>{{ charge.price }}</td>
+                    <td>Non payé</td>
+
+                    <td>
+                        <a href="" class="btn btn-primary btn-sm">Payer</a>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+
+         
+        </div>
+{% endblock %}
