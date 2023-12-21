@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/dashboard', name: 'dashboard_vehicle_')]
 class VehicleController extends AbstractController
 {
-    #[Route('/dashboard/vehicle', name: 'index')]
+    #[Route('/vehicle', name: 'index')]
     public function index(VehicleRepository $vehicleRepository): Response
     {
         $user = $this->getUser();
@@ -28,7 +28,7 @@ class VehicleController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/dashboard/vehicle/add', name: 'add')]
+    #[Route('/vehicle/add', name: 'add')]
     public function addVehicle(Request $request, ManagerRegistry $doctrine): Response
     {
         //création une instance vide de ayant le format Station
@@ -55,7 +55,7 @@ class VehicleController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/vehicle/update/{id}', name: 'update')]
+    #[Route('/vehicle/update/{id}', name: 'update')]
     public function updateVehicle(Vehicle $vehicle, Request $request, ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(VehicleType::class, $vehicle);

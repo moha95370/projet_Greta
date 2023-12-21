@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/dashboard', name: 'dashboard_charge_')]
 class ChargeController extends AbstractController
 {
-    #[Route('/dashboard/charge', name: 'index')]
+    #[Route('/charge', name: 'index')]
     public function index(ChargeRepository $chargeRepository): Response
     {
         $charges = $chargeRepository->findAll();
@@ -27,7 +27,7 @@ class ChargeController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/dashboard/charge/add', name: 'add')]
+    #[Route('/charge/add', name: 'add')]
     public function addVehicle(Request $request, ManagerRegistry $doctrine): Response
     {
       

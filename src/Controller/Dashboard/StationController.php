@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/dashboard', name: 'dashboard_station_')]
 class StationController extends AbstractController
 {
-    #[Route('/dashboard/station', name: 'index')]
+    #[Route('/station', name: 'index')]
     public function index(StationRepository $stationRepository): Response
     {
     
@@ -30,7 +30,7 @@ class StationController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/dashboard/station/add', name: 'add')]
+    #[Route('/station/add', name: 'add')]
     public function addStation(Request $request, ManagerRegistry $doctrine): Response
     {
         //création une instance vide de ayant le format Station
@@ -57,7 +57,7 @@ class StationController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/station/update/{id}', name: 'update')]
+    #[Route('/station/update/{id}', name: 'update')]
     public function updateStation(Station $station, Request $request, ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(StationType::class, $station);
