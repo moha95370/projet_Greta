@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Dashboard;
 
 use App\Entity\User;
 use App\Entity\Station;
@@ -14,23 +14,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
+#[Route('/dashboard', name: 'dashboard_station_')]
 class StationController extends AbstractController
 {
-    #[Route('/station', name: 'app_station')]
+    #[Route('/dashboard/station', name: 'index')]
     public function index(StationRepository $stationRepository): Response
     {
     
         $user = $this->getUser();
         $stations = $stationRepository->findBy(['user' => $user]);
 
-        return $this->render('station/index.html.twig', [
+        return $this->render('dashboard/station/index.html.twig', [
             'stations' => $stations,
         ]);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/station/add', name: 'station_add')]
+    #[Route('/dashboard/station/add', name: 'add')]
     public function addStation(Request $request, ManagerRegistry $doctrine): Response
     {
         //création une instance vide de ayant le format Station
@@ -48,16 +48,16 @@ class StationController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($station);
             $em->flush();
-            return $this->redirectToRoute('app_station');
+            return $this->redirectToRoute('dashboard_station_index');
         }
 
-        return $this->render('station/add.html.twig', [
+        return $this->render('dashboard/station/add.html.twig', [
             // Passer le formulaire à la vue
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/station/update/{id}', name: 'station_update')]
+    #[Route('/dashboard/station/update/{id}', name: 'update')]
     public function updateStation(Station $station, Request $request, ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(StationType::class, $station);
@@ -66,10 +66,10 @@ class StationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $doctrine->getManager();
             $em->flush();
-            return $this->redirectToRoute('app_station');
+            return $this->redirectToRoute('dashboard_station_index');
         }
 
-        return $this->render('station/add.html.twig', [//la redirection sur la meme vue
+        return $this->render('dashboard/station/add.html.twig', [//la redirection sur la meme vue
             'form' => $form->createView(),
             'h1' => 'Modifier un article'
         ]);

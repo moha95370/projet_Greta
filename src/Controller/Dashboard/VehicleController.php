@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Dashboard;
 
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
@@ -12,22 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/dashboard', name: 'dashboard_vehicle_')]
 class VehicleController extends AbstractController
 {
-    #[Route('/vehicle', name: 'app_vehicle')]
+    #[Route('/dashboard/vehicle', name: 'index')]
     public function index(VehicleRepository $vehicleRepository): Response
     {
         $user = $this->getUser();
 
         $vehicles = $vehicleRepository->findBy(['user' => $user]);
 
-        return $this->render('vehicle/index.html.twig', [
+        return $this->render('dashboard/vehicle/index.html.twig', [
             'vehicles' => $vehicles,
         ]);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/vehicle/add', name: 'vehicle_add')]
+    #[Route('/dashboard/vehicle/add', name: 'add')]
     public function addVehicle(Request $request, ManagerRegistry $doctrine): Response
     {
         //création une instance vide de ayant le format Station
@@ -45,16 +46,16 @@ class VehicleController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($vehicle);
             $em->flush();
-            return $this->redirectToRoute('app_vehicle');
+            return $this->redirectToRoute('dashboard_vehicle_index');
         }
 
-        return $this->render('vehicle/add.html.twig', [
+        return $this->render('dashboard/vehicle/add.html.twig', [
             // Passer le formulaire à la vue
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/vehicle/update/{id}', name: 'vehicle_update')]
+    #[Route('/dashboard/vehicle/update/{id}', name: 'update')]
     public function updateVehicle(Vehicle $vehicle, Request $request, ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(VehicleType::class, $vehicle);
@@ -63,10 +64,10 @@ class VehicleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $doctrine->getManager();
             $em->flush();
-            return $this->redirectToRoute('app_vehicle');
+            return $this->redirectToRoute('dashboard_vehicle_index');
         }
 
-        return $this->render('vehicle/add.html.twig', [//la redirection sur la meme vue
+        return $this->render('dashboard/vehicle/add.html.twig', [//la redirection sur la meme vue
             'form' => $form->createView(),
             'h1' => 'Modifier vehicule'
         ]);

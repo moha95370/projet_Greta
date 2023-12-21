@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Dashboard;
 
 use App\Entity\Charge;
 use App\Form\ChargeType;
@@ -13,20 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/dashboard', name: 'dashboard_charge_')]
 class ChargeController extends AbstractController
 {
-    #[Route('/charge', name: 'app_charge')]
+    #[Route('/dashboard/charge', name: 'index')]
     public function index(ChargeRepository $chargeRepository): Response
     {
         $charges = $chargeRepository->findAll();
 
-        return $this->render('charge/index.html.twig', [
+        return $this->render('dashboard/charge/index.html.twig', [
             'charges' => $charges,
         ]);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/charge/add', name: 'charge_add')]
+    #[Route('/dashboard/charge/add', name: 'add')]
     public function addVehicle(Request $request, ManagerRegistry $doctrine): Response
     {
       
@@ -40,10 +41,10 @@ class ChargeController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($charge);
             $em->flush();
-            return $this->redirectToRoute('app_charge');
+            return $this->redirectToRoute('dashboard_charge_index');
         }
 
-        return $this->render('charge/add.html.twig', [
+        return $this->render('dashboard/charge/add.html.twig', [
             // Passer le formulaire à la vue
             'form' => $form->createView(),
         ]);
