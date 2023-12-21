@@ -20,6 +20,9 @@ class VehicleType extends AbstractType
             // ->add('active')
             // ->add('user')
             // ->add('charge_vehicle')
+            ->add('name', TextType::class, [
+                "label" => "Nom de la voiture",
+            ])
             
             ->add('typePrise', TextType::class, [
                 "label" => "Type de prise",

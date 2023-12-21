@@ -9,7 +9,7 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>Mes Charges</h1>
+                            <h1>Mes charges</h1>
                         </div>
                     </div>
                 </div>
@@ -30,6 +30,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Id</th>
+                        <th>Voiture</th>
+                        <th>Borne</th>
                         <th>Date du début</th>
                         <th>Date de fin</th>
                         <th>Prix</th>
@@ -42,6 +44,8 @@
                     {% for charge in charges %}
                     <tr>
                     <td>{{ charge.id }}</td>
+                    <td></td>
+                    <td></td>
                     <td>{{ charge.createdAt | date }}</td>
                     <td>{{ charge.duration | date }}</td>
                     <td>{{ charge.price }}</td>

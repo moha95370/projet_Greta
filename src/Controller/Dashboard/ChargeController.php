@@ -2,10 +2,11 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Entity\User;
 use App\Entity\Charge;
 use App\Form\ChargeType;
-use App\Repository\ChargeRepository;
 use App\Repository\UserRepository;
+use App\Repository\ChargeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +20,11 @@ class ChargeController extends AbstractController
     #[Route('/charge', name: 'index')]
     public function index(ChargeRepository $chargeRepository): Response
     {
-        $charges = $chargeRepository->findAll();
-
+        $user = $this->getUser();
+        $userId = $user->getId();
+    
+        $charges = $chargeRepository->findChargesUser($userId);
+    
         return $this->render('dashboard/charge/index.html.twig', [
             'charges' => $charges,
         ]);
@@ -28,7 +32,7 @@ class ChargeController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/charge/add', name: 'add')]
-    public function addVehicle(Request $request, ManagerRegistry $doctrine): Response
+    public function addCharge(Request $request, ManagerRegistry $doctrine): Response
     {
       
         $charge = new Charge();
@@ -37,7 +41,7 @@ class ChargeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             //Associer le user connecté
-            // $charge->setUser($this->getUser());
+            //$charge->setUser($this->getUser());
             $charge->setPayment(false);
             $em = $doctrine->getManager();
             $em->persist($charge);

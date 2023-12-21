@@ -30,6 +30,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Id</th>
+                        <th>Nom</th>
                         <th>Type de prise</th>
                         <th>Date de création</th>
                         <th>Actions</th>
@@ -40,6 +41,7 @@
                     {% for vehicle in vehicles %}
                     <tr>
                     <td>{{ vehicle.id }}</td>
+                    <td>{{ vehicle.name }}</td>
                     <td>{{ vehicle.typePrise }}</td>
                     <td>{{ vehicle.createdAt | date }}</td>                    
                     <td>

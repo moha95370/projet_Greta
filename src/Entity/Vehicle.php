@@ -37,6 +37,9 @@ class Vehicle
     #[ORM\ManyToMany(targetEntity: Charge::class, mappedBy: 'vehicle')]
     private Collection $charge_vehicle;
 
+    #[ORM\Column(length: 50)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->charge_vehicle = new ArrayCollection();
@@ -130,6 +133,18 @@ class Vehicle
         if ($this->charge_vehicle->removeElement($chargeVehicle)) {
             $chargeVehicle->removeVehicle($this);
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
