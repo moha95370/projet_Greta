@@ -24,7 +24,7 @@
             <li class="breadcrumb-item active">Liste :</li>
         </ol>
 
-        <a class="btn btn-primary mb-4" href="{{ path('vehicle_add')}}">Ajouter</a>
+        <a class="btn btn-primary mb-4" href="{{ path('dashboard_vehicle_add')}}">Ajouter</a>
                    
             <table class="table">
                 <thead class="thead-dark">
@@ -43,7 +43,7 @@
                     <td>{{ vehicle.typePrise }}</td>
                     <td>{{ vehicle.createdAt | date }}</td>                    
                     <td>
-                        <a href="{{ path('vehicle_update', {id: vehicle.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                        <a href="{{ path('dashboard_vehicle_update', {id: vehicle.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
                     </td>
                     </tr>
                     {% endfor %}

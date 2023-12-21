@@ -24,7 +24,7 @@
             <li class="breadcrumb-item active">Liste :</li>
         </ol>
 
-        <a class="btn btn-primary mb-4" href="{{ path('station_add')}}">Ajouter</a>
+        <a class="btn btn-primary mb-4" href="{{ path('dashboard_station_add')}}">Ajouter</a>
                    
             <table class="table">
                 <thead class="thead-dark">
@@ -51,7 +51,7 @@
                     <td>{{ station.createdAt | date }}</td>
                     <td>{{ ( station.availability == true ) ? 'Dispo' : 'Non dispo' }}</td>
                     <td>
-                        <a href="{{ path('station_update', {id: station.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                        <a href="{{ path('dashboard_station_update', {id: station.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
                     </td>
                     </tr>
                     {% endfor %}
