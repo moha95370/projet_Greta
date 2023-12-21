@@ -24,7 +24,7 @@
             <li class="breadcrumb-item active">Liste :</li>
         </ol>
 
-        <a class="btn btn-primary mb-4" href="{{ path('charge_add')}}">Ajouter</a>
+        <a class="btn btn-primary mb-4" href="{{ path('dashboard_charge_add')}}">Ajouter</a>
                    
          <table class="table">
                 <thead class="thead-dark">
@@ -45,10 +45,12 @@
                     <td>{{ charge.createdAt | date }}</td>
                     <td>{{ charge.duration | date }}</td>
                     <td>{{ charge.price }}</td>
-                    <td>Non payé</td>
+                    <td>{{ ( charge.payment == true ) ? 'Payer' : 'Non payer' }}</td>
 
                     <td>
-                        <a href="" class="btn btn-primary btn-sm">Payer</a>
+                        {% if ( charge.payment == false ) %}
+                            <a href="" class="btn btn-primary btn-sm">Payer</a>
+                        {% endif %}
                     </td>
                     </tr>
                     {% endfor %}

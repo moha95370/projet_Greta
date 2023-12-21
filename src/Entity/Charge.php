@@ -31,6 +31,9 @@ class Charge
     #[ORM\ManyToMany(targetEntity: Vehicle::class, inversedBy: 'charge_vehicle')]
     private Collection $vehicle;
 
+    #[ORM\Column]
+    private ?bool $payment = null;
+
     public function __construct()
     {
         $this->station = new ArrayCollection();
@@ -122,6 +125,18 @@ class Charge
     public function removeVehicle(Vehicle $vehicle): static
     {
         $this->vehicle->removeElement($vehicle);
+
+        return $this;
+    }
+
+    public function isPayment(): ?bool
+    {
+        return $this->payment;
+    }
+
+    public function setPayment(bool $payment): static
+    {
+        $this->payment = $payment;
 
         return $this;
     }

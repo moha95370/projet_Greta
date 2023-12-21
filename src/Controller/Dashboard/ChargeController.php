@@ -38,6 +38,7 @@ class ChargeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //Associer le user connecté
             // $charge->setUser($this->getUser());
+            $charge->setPayment(false);
             $em = $doctrine->getManager();
             $em->persist($charge);
             $em->flush();
