@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Station;
 use App\Form\StationType;
+use App\Form\Station2Type;
 use App\Repository\StationRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class StationController extends AbstractController
 {
@@ -52,6 +54,24 @@ class StationController extends AbstractController
         return $this->render('station/add.html.twig', [
             // Passer le formulaire à la vue
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/station/update/{id}', name: 'station_update')]
+    public function updateStation(Station $station, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $form = $this->createForm(StationType::class, $station);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+            $em->flush();
+            return $this->redirectToRoute('app_station');
+        }
+
+        return $this->render('station/add.html.twig', [//la redirection sur la meme vue
+            'form' => $form->createView(),
+            'h1' => 'Modifier un article'
         ]);
     }
     

@@ -35,7 +35,7 @@ class StationType extends AbstractType
                 "label" => "Lieu d'installation"
             ])
             //->add('active')
-            
+            ->add('availability')
             ->add('Valider', SubmitType::class)
         ;
     }

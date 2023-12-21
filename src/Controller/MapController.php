@@ -15,14 +15,16 @@ class MapController extends AbstractController
     #[Route('/map', name: 'app_map')]
     public function index(StationRepository $stationRepository): Response
     {
-        //Utilisation du composant HttpClient de Symfony pour effectuer une requête GET à l'URL. 
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET', 'https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/bornes-irve/records?limit=100&refine=departement%3A%22Paris%22');
-        //Les résultats de la requête sont ensuite convertis en tableau à l'aide de la méthode toArray()
         $stationsFromAPI = $response->toArray();
 
-        $stationsFromDB = $stationRepository->findAll();
+        
+        // $jsonFilePath = 'C:\cda\data-json\bornes3.json';
+        // $jsonContent = file_get_contents($jsonFilePath);
+        // $stationsFromJson = json_decode($jsonContent, true);
 
+        $stationsFromDB = $stationRepository->findAll();
         // Combiner les données
         $combinedData = array_merge($stationsFromAPI, $stationsFromDB);
 

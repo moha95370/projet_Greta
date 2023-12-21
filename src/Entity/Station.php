@@ -54,6 +54,9 @@ class Station
     #[ORM\ManyToMany(targetEntity: Charge::class, mappedBy: 'station')]
     private Collection $charge_station;
 
+    #[ORM\Column]
+    private ?bool $availability = null;
+
     public function __construct()
     {
         $this->charge_station = new ArrayCollection();
@@ -208,6 +211,18 @@ class Station
         if ($this->charge_station->removeElement($chargeStation)) {
             $chargeStation->removeStation($this);
         }
+
+        return $this;
+    }
+
+    public function isAvailability(): ?bool
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability(bool $availability): static
+    {
+        $this->availability = $availability;
 
         return $this;
     }

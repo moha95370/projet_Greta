@@ -53,4 +53,22 @@ class VehicleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/vehicle/update/{id}', name: 'vehicle_update')]
+    public function updateVehicle(Vehicle $vehicle, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $form = $this->createForm(VehicleType::class, $vehicle);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+            $em->flush();
+            return $this->redirectToRoute('app_vehicle');
+        }
+
+        return $this->render('vehicle/add.html.twig', [//la redirection sur la meme vue
+            'form' => $form->createView(),
+            'h1' => 'Modifier vehicule'
+        ]);
+    }
 }
