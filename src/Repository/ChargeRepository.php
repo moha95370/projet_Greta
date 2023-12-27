@@ -37,18 +37,35 @@ class ChargeRepository extends ServiceEntityRepository
 //    }
 
     //requette pour réccupéré les recharges des utilisateur connecter
-    public function findCharges(): array
-    {
-        $entityManager = $this->getEntityManager();
+    // public function findCharges(): array
+    // {
+    //     $entityManager = $this->getEntityManager();
 
-        $query = $entityManager->createQuery(
-            'SELECT c.id, c.createdAt, c.duration, c.price, c.payment
-            FROM App\Entity\Charge c
-            ORDER BY c.createdAt DESC'
-        )
-        ;
-        return $query->getResult();
-    }
+    //     $query = $entityManager->createQuery(
+    //         'SELECT c.id, c.createdAt, c.duration, c.price, c.payment
+    //         FROM App\Entity\Charge c
+    //         ORDER BY c.createdAt DESC'
+    //     )
+    //     ;
+    //     return $query->getResult();
+    // }
+
+    // public function findCharges(): array
+    // {
+    //     $entityManager = $this->getEntityManager();
+
+    //     $query = $entityManager->createQuery(
+    //         'SELECT c.id, c.createdAt, c.duration, c.price, c.payment
+    //         FROM App\Entity\Charge c
+    //         INNER JOIN App\Entity\Vehicle v ON c.vehicle = v.id
+    //         INNER JOIN App\Entity\User u ON v.user = u.id
+    //         WHERE u.id = :userId'
+    //     )
+    //     ;
+    //     return $query->getResult();
+    // }
+
+
 
     public function findChargesUser($userId)
     {

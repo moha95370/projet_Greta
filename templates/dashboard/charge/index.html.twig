@@ -29,12 +29,12 @@
          <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Id</th>
                         <th>Voiture</th>
                         <th>Borne</th>
                         <th>Date du début</th>
                         <th>Date de fin</th>
-                        <th>Prix</th>
+                        <th>Prix/Heure</th>
+                        <th>Prix total</th>
                         <th>Payement</th>
                         <th>Actions</th>
                     </tr>
@@ -43,12 +43,20 @@
                     <!--une ligne du tableau-->
                     {% for charge in charges %}
                     <tr>
-                    <td>{{ charge.id }}</td>
-                    <td></td>
-                    <td></td>
-                    <td>{{ charge.createdAt | date }}</td>
-                    <td>{{ charge.duration | date }}</td>
+                    <td>{% for vehicle in charge.vehicle %}
+                            {{ vehicle.name }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{% for station in charge.station %}
+                            {{ station.name }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}</td>
+                    <td>{{ charge.createdAt | date('Y-m-d à H:i:s') }}</td>
+                    <td>{{ charge.duration | date('Y-m-d à H:i:s') }}</td>
+                    {# <td>{{ charge.duration | date('H:i:s') }}</td> #}
                     <td>{{ charge.price }}</td>
+                    <td>{{ charge.totalPrice }}</td>
                     <td>{{ ( charge.payment == true ) ? 'Payer' : 'Non payer' }}</td>
 
                     <td>
