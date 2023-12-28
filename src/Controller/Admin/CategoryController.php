@@ -61,7 +61,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->render('admin/category/add.html.twig', [
-            'h1' => 'Mofifier une catégorie'
+            'h1' => 'Modifier une catégorie'
         ]);
     }
 

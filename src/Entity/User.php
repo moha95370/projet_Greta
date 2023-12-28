@@ -53,6 +53,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Vehicle::class, orphanRemoval: true)]
     private Collection $vehicles;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserRequest::class, orphanRemoval: true)]
+    private Collection $userRequests;
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -60,6 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->information = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->vehicles = new ArrayCollection();
+        $this->userRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -305,4 +310,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, UserRequest>
+     */
+    public function getUserRequests(): Collection
+    {
+        return $this->userRequests;
+    }
+
+    public function addUserRequest(UserRequest $userRequest): static
+    {
+        if (!$this->userRequests->contains($userRequest)) {
+            $this->userRequests->add($userRequest);
+            $userRequest->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRequest(UserRequest $userRequest): static
+    {
+        if ($this->userRequests->removeElement($userRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($userRequest->getUser() === $this) {
+                $userRequest->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
