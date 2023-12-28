@@ -8,13 +8,13 @@
 
 {% block content %}
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Gestion des types de demandes</h1>
+        <h1 class="mt-4">Gestion des demandes</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Demandes</li>
             <li class="breadcrumb-item active">Liste :</li>
         </ol>
 
-        <a class="btn btn-primary mb-4" href="{{ path('admin_typeRequest_add')}}">Ajouter</a>
+        <a class="btn btn-primary mb-4" href="{{ path('admin_userRequest_add')}}">Ajouter</a>
         
         <!-- Tableau  -->
         <div class="card mb-4">
@@ -27,21 +27,31 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Nom</th>
-                            <th>Slug</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>E-mail</th>
+                            <th>Téléphone</th>
+                            <th>Type de demande</th>
+                            <th>Contenu</th>
+                            <th>Date de création</th>
+                            <th>Demande</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!--une ligne du tableau-->
-                        {% for typeRequest in typesRequest %}
+                        {% for userRequest in usersRequest %}
                         <tr>
-                        <td>{{ typeRequest.id }}</td>
-                        <td>{{ typeRequest.name }}</td>
-                        <td>{{ typeRequest.slug }}</td>
+                        <td>{{ userRequest.id }}</td>
+                        <td>{{ userRequest.displayName }}</td>
+                        <td>{{ userRequest.email }}</td>
+                        <td>{{ userRequest.phone }}</td>
+                        <td>{{ userRequest.typeRequest }}</td>
+                        <td>{{ userRequest.content }}</td>
+                        <td>{{ userRequest.createdAt | date }}</td>
+                        <td>{{ ( userRequest.active == true ) ? 'Fait' : 'A Faire' }}</td>
                         <td>
-                            <a href="{{ path('admin_typeRequest_update', {id: typeRequest.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
-                            <a href="{{ path('admin_typeRequest_delete', {id: typeRequest.id, _csrf_token: csrf_token('delete')}) }}" class="btn btn-danger btn-sm"  onclick="return confirm('Etes-vous certain ?')">Supprimer</a>
+                            <a href="{{ path('admin_userRequest_update', {id: userRequest.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('admin_userRequest_delete', {id: userRequest.id, _csrf_token: csrf_token('delete')}) }}" class="btn btn-danger btn-sm"  onclick="return confirm('Etes-vous certain ?')">Supprimer</a>
                         </td>
                         </tr>
                         {% endfor %}
@@ -49,9 +59,13 @@
                     <tfoot>
                         <tr>
                             <th>Id</th>
-                            <th>Nom</th>
-                            <th>Slug</th>
-                            <th>Parent</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>E-mail</th>
+                            <th>Téléphone</th>
+                            <th>Type de demande</th>
+                            <th>Contenu</th>
+                            <th>Date de création</th>
+                            <th>Demande</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>

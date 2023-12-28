@@ -18,7 +18,6 @@ class TypeRequestType extends AbstractType
             "label" => "Nom du type de demande",
         ])
         //->add('slug')
-        //->add('parent')
         ->add('Valider', SubmitType::class)
         ;
     }

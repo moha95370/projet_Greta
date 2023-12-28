@@ -4,12 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\TypeRequest;
 use App\Form\TypeRequestType;
+use App\Form\TypeRequest2Type;
 use App\Repository\TypeRequestRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -61,6 +62,7 @@ class TypeRequestController extends AbstractController
         }
 
         return $this->render('admin/type_request/add.html.twig', [
+            'form' => $form->createView(),
             'h1' => 'Modifier une type de demande'
         ]);
     }

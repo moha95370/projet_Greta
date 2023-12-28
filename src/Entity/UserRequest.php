@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRequestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: UserRequestRepository::class)]
 class UserRequest
@@ -30,12 +31,16 @@ class UserRequest
     private ?bool $active = null;
 
     #[ORM\ManyToOne(inversedBy: 'userRequests')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'userRequests')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeRequest $typeRequest = null;
+
+    #[ORM\Column]
+    #[Gedmo\Timestampable(on:"create")]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
@@ -122,6 +127,18 @@ class UserRequest
     public function setTypeRequest(?TypeRequest $typeRequest): static
     {
         $this->typeRequest = $typeRequest;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

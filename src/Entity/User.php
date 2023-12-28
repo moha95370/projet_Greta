@@ -67,6 +67,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userRequests = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->displayName;
+    }
+
     public function getId(): ?int
     { 
         return $this->id;

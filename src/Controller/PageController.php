@@ -27,6 +27,15 @@ class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/description', name: 'app_description')]
+    public function description(): Response
+    {
+
+        return $this->render('page/description.html.twig', [
+            
+        ]);
+    }
+
     #[Route('/contact', name: 'app_contact')]
     public function contact(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -53,6 +62,8 @@ class PageController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    
 
 
 }
