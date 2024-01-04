@@ -36,7 +36,8 @@
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-    
+
+            
 
             var chargingStations = {{ stations|json_encode|raw }};
             //l'extension MarkerCluster qui permet de regrouper les marqueurs proches les uns des autres pour améliorer la lisibilité de la carte.
