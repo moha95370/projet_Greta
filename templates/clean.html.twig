@@ -26,7 +26,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="{{ path('home')}}">E-terminal</a>
+            <a class="navbar-brand" href="{{ path('home')}}">E-T</a>
 
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success" role="alert">{{ message }}</div>
@@ -45,9 +45,9 @@
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_map') }}">TROUVER UNE BORNE</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_blog') }}">ACTUALITES</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_description') }}">QUI SOMMES-NOUS?</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_contact') }}">Nous contacter</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_contact') }}">NOUS CONTACTER</a></li>
                     {% if not is_granted("ROLE_USER") %}
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_login') }}">INSTALLATION BORNE</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_login') }}">PROPOSER UNE BORNE</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_register') }}">S'inscrire</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ path('app_login') }}">Login</a></li>
                     {% else %}
